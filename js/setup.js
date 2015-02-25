@@ -93,8 +93,24 @@ ws.onclose = function() {
     console.log('DISCONNECT');
 };
 ws.onmessage = function(event) {
-    console.log('MESSAGE: ' + event.data);
+    console.log(event.data);
 };
 
-var playerChannel = new webkitRTCPeerConnection(ws);
-console.log(signalingChannel)
+var config = {'iceServers':[
+        {"url": "stun:stun.services.mozilla.com"}
+    ]
+};
+var peerConnection = new webkitRTCPeerConnection(config);
+console.log(peerConnection)
+
+peerConnection.onicecandidate = function(){
+    console.log('onicecandidate', peerConnection)
+}
+
+
+
+
+
+
+
+//fuckin scrolls

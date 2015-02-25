@@ -6,4 +6,4 @@ from time import sleep
 while True:
   print('Hey')
   stdout.flush()
-  sleep(0.5)
+  sleep(3)

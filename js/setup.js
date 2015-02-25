@@ -1,4 +1,4 @@
-/* 
+/*
 * @Author: bbales
 * @Date:   2015-02-22 20:57:50
 * @Last Modified by:   bbales
@@ -70,3 +70,19 @@ var game = {
     }
 };
 
+
+// websocket stuffs
+
+var ws = new WebSocket('ws://localhost:8080/');
+ws.onopen = function() {
+    console.log('CONNECT');
+};
+ws.onclose = function() {
+    console.log('DISCONNECT');
+};
+ws.onmessage = function(event) {
+    console.log('MESSAGE: ' + event.data);
+};
+
+var playerChannel = new webkitRTCPeerConnection(ws);
+console.log(signalingChannel)

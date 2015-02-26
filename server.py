@@ -24,6 +24,7 @@ def runtime():
         # check stdin
         message = json.loads(stdin.readline().rstrip('\n'))
         if message['type'] == 'connect':
+            sendGlobalMessage(json.dumps(message['content']))
             online_players.insert(message)
 
 if __name__ == "__main__":

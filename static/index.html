@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel="shortcut icon" href="img/kodamaheadl.png">
+        <link rel="stylesheet" href="css/main.css">
+        <title>BattleSnake v0.1</title>
+    </head>
+    <body onload="game.start()">
+        <div class="scores">
+            <div class="p1score score">
+                LENGTH:
+            </div>
+        </div>
+        <!-- Canvas 500x500 for now -->
+        <canvas id="battlesnake" class="battlesnake"></canvas>
+
+        <!-- Scripts -->
+        <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+        <script src="js/setup.js"></script>
+        <script src="js/websockets.js"></script>
+        <script src="js/animationfunctions.js"></script>
+        <script src="js/bullets.js"></script>
+        <script src="js/keyboard.js"></script>
+        <script src="js/util.js"></script>
+        <script src="js/explosions.js"></script>
+        <script src="js/snakes.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>

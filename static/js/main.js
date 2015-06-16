@@ -8,7 +8,7 @@
     'use strict';
 
     game.start = function(){
-        game.reset();
+        game.snakes.spawn();
 
         game.canvas = document.getElementById("battlesnake").getContext("2d");
         game.sizeBoard();
@@ -17,52 +17,44 @@
     };
 
     game.mainLoop = function(){
-        game.sizeBoard();
-
-        // Check for game over
-        if(game.flags.gameover){
-            game.over();
-            return;
-        }
-
-        // Stall if paused
-        if(game.flags.paused){
-            // Paused loop
-            setTimeout(game.mainLoop,1000/game.frameRate);
-            return;
-        }
+        // Set at
+        game.sizeBoard(550, 550);
 
         // Reset canvas
         game.canvas.clearRect(0,0,game.width+game.block,game.height+game.block);
 
         game.controls();
 
+        game.copyPlayer();
+
         // Draw snakes
         game.snakes.drawAll();
 
-        // Draw food
-        game.generateFood();
+
+        game.snakes.moveAll();
+
+        // Need to be moved serverside
+            // Draw food
+            // game.generateFood();
 
         // Bullets
-        game.bullets.generate();
+        // game.bullets.generate();
 
         // Draw any explosions
-        game.drawExplosions();
+        // game.drawExplosions();
 
-        // Check for collisions
-        var collisions = 0;
-
-        for(var i in game.player.train){
-            if(game.player.train[i][0] == game.player.x && game.player.train[i][1] == game.player.y){
-                collisions++;
-                game.flags.result = P1LOSS;
-                break;
-            }
-        }
-
-        if(game.player.train.length >= game.player.len) game.player.train.pop();
-        game.player.train.unshift([game.player.x,game.player.y]);
-
+        // // Check for collisions
+        // var collisions = 0;
+        //
+        // for(var i in game.player.train){
+        //     if(game.player.train[i][0] == game.player.x && game.player.train[i][1] == game.player.y){
+        //         collisions++;
+        //         break;
+        //     }
+        // }
+        // if(game.local.player.train.length >= game.local.player.len) game.local.player.train.pop();
+        //
+        // game.local.player.train.unshift([game.local.player.x,game.local.player.y]);
 
         setTimeout(game.mainLoop,1000/game.frameRate);
     };

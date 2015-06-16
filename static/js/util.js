@@ -9,20 +9,25 @@ var size = [window.width,window.height];
 (function(){
     'use strict';
 
-    game.reset = function(){
-        game.flags.gameover = false;
-        game.flags.tie = false;
+    game.randomDir = function(){
+        return Math.round(Math.random()*3)+1;
+    };
 
-        game.player.len = 3;
-        game.player.train = [];
-
-        game.food.a = [];
-        game.bullets.a = [];
-        game.explosions = [];
+    game.randomColor = function(colors){
+        var i = Math.round(Math.random()*(colors.length-1));
+        return colors[i];
     };
 
     game.quantize = function(int){
         return Math.round(int/10)*10;
+    };
+
+    game.copyPlayer = function(){
+        for(var i=0; i<game.state.snakes.length; i++){
+            if(game.local.player.id==game.state.snakes[i].id){
+                game.state.snakes[i].dir=game.local.player.dir;
+            }
+        }
     };
 
     game.showOverlay = function(set){
@@ -33,9 +38,9 @@ var size = [window.width,window.height];
         }
     };
 
-    game.sizeBoard = function(){
-        document.getElementById("battlesnake").setAttribute("width",500);
-        document.getElementById("battlesnake").setAttribute("height",500);
+    game.sizeBoard = function(w, h){
+        document.getElementById("battlesnake").setAttribute("width",w);
+        document.getElementById("battlesnake").setAttribute("height",h);
         game.width = game.quantize(document.getElementById("battlesnake").getAttribute("width"));
         game.height = game.quantize(document.getElementById("battlesnake").getAttribute("height"));
     };
@@ -90,7 +95,7 @@ var size = [window.width,window.height];
 
     game.generateSuperFood = function(){
         // Check for food
-        var points = 50;
+        var points = 15;
         for(var i in game.food.b){
             if(game.food.b[i][0] == game.p1.x && game.food.b[i][1] == game.p1.y){
                 game.snakes.addPoints('player',points);

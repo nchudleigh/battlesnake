@@ -7,6 +7,8 @@
 
 (function(){
     'use strict';
+    game.bullets = {};
+
     game.bullets.addBullet = function(sn){
         var bullet = {
             x : game[sn].x,
@@ -14,7 +16,7 @@
             dir : game[sn].dir,
         };
 
-        game.bullets.a.push(bullet);
+        game.state.bullets.a.push(bullet);
     };
 
     game.bullets.generate = function(){
@@ -69,15 +71,13 @@
 
             if((game.bullets.a[i].x == game.p2.x && game.bullets.a[i].y == game.p2.y) || (tracers[0] == game.p2.x && tracers[1] == game.p2.y)){
                 console.log('head')
-                game.flags.result = P2LOSS;
-                game.flags.gameover = true;
+                // boom headshot
                 break;
             }
 
             if((game.bullets.a[i].x == game.p1.x && game.bullets.a[i].y == game.p1.y) || (tracers[0] == game.p1.x && tracers[1] == game.p1.y)){
                 console.log('head')
-                game.flags.result = P1LOSS;
-                game.flags.gameover = true;
+                // boom headshot
                 break;
             }
 

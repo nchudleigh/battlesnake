@@ -15,56 +15,35 @@ var RIGHT = 4;
 var game = {
     block : 10,
     frameRate : 26,
-    flags : {
-        gameover : false,
-        paused : false,
-        tie : false,
-        result : undefined,
-    },
-    keys : {
-        w : false,
-        s : false,
-        a : false,
-        d : false,
-        up : false,
-        down : false,
-        left : false,
-        right : false,
+    local:{
+        player:{},
+        controls:{
+            up:[87,38],
+            down:[83,40],
+            left:[65,37],
+            right:[68,39],
+            fire:[70,32]
+        },
+        keys : {
+            up : false,
+            down : false,
+            left : false,
+            right : false,
+            fire : 0 // this one has a countdown timer
+        },
+        lastkeys : undefined,
+        canvas : null,
+        explosions : [],
+        shadow : {
+            dir : true,
+            val : 0,
+        },
 
-        fire1 : 0,
-        fire2 : 0
     },
-    lastkeys : undefined,
-    canvas : null,
-    food : {
-        max : 10,
-        superMax : 1,
-        a : [],
-        b : [],
-        colors : ["rgba(255,252,99,1)",
-                  "rgba(255,216,99,1)",
-                  "rgba(255,176,99,1)",
-                  "rgba(255,135,99,1)",
-                  "rgba(255,95,99,1)"],
-    },
-    bullets : {
-        a : [],
-    },
-    explosions : [],
-    shadow : {
-        dir : true,
-        val : 0,
-    },
-
-    player : {
-        // UP DOWN LEFT RIGHT FIRE
-        controls : [87,83,65,68,32],
-        color: "0,150,255",
-        dir : 1,
-        x : 200,
-        y : 200,
-        len : 3,
-        train : [],
-        wins : 0,
+    state:{
+        snakes : [],
+        bullets : {
+            a : [],
+        },
     }
 };

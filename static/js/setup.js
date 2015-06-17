@@ -15,6 +15,7 @@ var RIGHT = 4;
 var game = {
     block : 10,
     frameRate : 26,
+    maxLen : 25,
     local:{
         player:{},
         controls:{
@@ -29,11 +30,24 @@ var game = {
             down : false,
             left : false,
             right : false,
-            fire : 0 // this one has a countdown timer
+            fire : 0
         },
         lastkeys : undefined,
         canvas : null,
         explosions : [],
+        food : {
+            max : 10,
+            superMax : 1,
+            a : [],
+            b : [],
+            colors : [
+                "rgba(255,252,99,1)",
+                "rgba(255,216,99,1)",
+                "rgba(255,176,99,1)",
+                "rgba(255,135,99,1)",
+                "rgba(255,95,99,1)"
+            ]
+        },
         shadow : {
             dir : true,
             val : 0,

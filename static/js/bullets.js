@@ -43,7 +43,7 @@
 
             // Draw
             game.canvas.shadowColor = "#B4B4B4";
-            game.canvas.shadowBlur = game.shadow.val * 8;
+            game.canvas.shadowBlur = game.local.shadow.val * 8;
             game.canvas.fillStyle = "#101010";
             game.canvas.beginPath();
             game.canvas.arc(game.bullets.a[i].x+game.block/2,game.bullets.a[i].y+game.block/2, game.block/2, 0, 2 * Math.PI, false);

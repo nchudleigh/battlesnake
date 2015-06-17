@@ -47,41 +47,45 @@ var size = [window.width,window.height];
 
     game.generateFood = function(){
         // Check for food
-        for(var i in game.food.a){
-            if(game.food.a[i][0] == game.p1.x && game.food.a[i][1] == game.p1.y){
-                game.snakes.addPoints('player',(game.food.a[i][2]+3)*2);
-                game.addExplosion(game.food.colors[game.food.a[i][2]],50+Math.round(Math.random()*60),game.food.a[i][0],game.food.a[i][1],(game.food.a[i][2]+3)*2,15);
-                game.food.a.splice(i,1);
+        for(var i in game.local.food.a){
+            if(game.local.food.a[i][0] == game.local.player.x && game.local.food.a[i][1] == game.local.player.y){
+                game.snakes.addPoints((game.local.food.a[i][2]+3)*2);
+                game.addExplosion(game.local.food.colors[game.local.food.a[i][2]],50+Math.round(Math.random()*60),game.local.food.a[i][0],game.local.food.a[i][1],(game.local.food.a[i][2]+3)*2,15);
+                game.local.food.a.splice(i,1);
                 break;
             }
         }
 
 
         // Generate food
-        if(game.food.a.length < game.food.max && Math.round(Math.random()*35) == Math.round(Math.random()*35)){
-            game.food.a.push([game.quantize(Math.random()*game.width),game.quantize(Math.random()*game.height),Math.round(Math.random()*4)]);
+        if(game.local.food.a.length < game.local.food.max && Math.round(Math.random()*35) == Math.round(Math.random()*35)){
+            game.local.food.a.push([game.quantize(Math.random()*game.width),game.quantize(Math.random()*game.height),Math.round(Math.random()*4)]);
         }
 
         // Food glow
-        if(game.shadow.dir){
-            game.shadow.val += 0.07;
-            if(game.shadow.val > 1) game.shadow.dir = false;
+        if(game.local.shadow.dir){
+            game.local.shadow.val += 0.07;
+            if(game.local.shadow.val > 1) game.local.shadow.dir = false;
         }else{
-            game.shadow.val -= 0.07;
-            if(game.shadow.val < 0) game.shadow.dir = true;
+            game.local.shadow.val -= 0.07;
+            if(game.local.shadow.val < 0) game.local.shadow.dir = true;
         }
 
-        // Draw food
-        for(i in game.food.a){
-            game.canvas.shadowColor = game.food.colors[game.food.a[i][2]];
-            game.canvas.shadowBlur = game.shadow.val * 18;
-            game.canvas.fillStyle = game.food.colors[game.food.a[i][2]];
+
+    };
+
+    // Draw food
+    game.drawFood = function(){
+        for( var i in game.local.food.a){
+            game.canvas.shadowColor = game.local.food.colors[game.local.food.a[i][2]];
+            game.canvas.shadowBlur = game.local.shadow.val * 18;
+            game.canvas.fillStyle = game.local.food.colors[game.local.food.a[i][2]];
             game.canvas.beginPath();
-            game.canvas.arc(game.food.a[i][0]+game.block/2,game.food.a[i][1]+game.block/2, game.block/2, 0, 2 * Math.PI, false);
+            game.canvas.arc(game.local.food.a[i][0]+game.block/2,game.local.food.a[i][1]+game.block/2, game.block/2, 0, 2 * Math.PI, false);
             game.canvas.fill();
             game.canvas.fillStyle = "#000";
             game.canvas.beginPath();
-            game.canvas.arc(game.food.a[i][0]+game.block/2,game.food.a[i][1]+game.block/2, game.block/3.5, 0, 2 * Math.PI, false);
+            game.canvas.arc(game.local.food.a[i][0]+game.block/2,game.local.food.a[i][1]+game.block/2, game.block/3.5, 0, 2 * Math.PI, false);
             game.canvas.fill();
         }
 
@@ -89,61 +93,22 @@ var size = [window.width,window.height];
         game.canvas.shadowBlur = 0;
         game.canvas.fill();
 
-        game.generateSuperFood();
     };
 
+    game.checkCollision = function(){
+        var collisions = 0;
+        //
+        for(var i=0; i<game.state.snakes.length; i++){
+            for(var i=0; i<game.state.snakes[i].train.length; i++){
+                var sn = game.state.snakes[i];
+                var pr = game.local.player;
+                if(sn.train[i][0] == pr.x && sn.train[i][1] == pr.y){
+                    // Player Dies
+                    game.local.player = {};
+                }
+            };
 
-    game.generateSuperFood = function(){
-        // Check for food
-        var points = 15;
-        for(var i in game.food.b){
-            if(game.food.b[i][0] == game.p1.x && game.food.b[i][1] == game.p1.y){
-                game.snakes.addPoints('player',points);
-                game.addExplosion("#46FF00",50+Math.round(Math.random()*60),game.food.b[i][0],game.food.b[i][1],points,20);
-                game.food.b.splice(i,1);
-                break;
-            }
         }
+    }
 
-        // Generate food
-        if(game.food.b.length < game.food.superMax && Math.round(Math.random()*20) == Math.round(Math.random()*20)){
-            game.food.b.push([game.quantize(Math.random()*game.width),game.quantize(Math.random()*game.height),Math.round(Math.random()*4)]);
-        }
-
-        // Food glow
-        if(game.shadow.dir){
-            game.shadow.val += 0.07;
-            if(game.shadow.val > 1) game.shadow.dir = false;
-        }else{
-            game.shadow.val -= 0.07;
-            if(game.shadow.val < 0) game.shadow.dir = true;
-        }
-
-        // Draw food
-        for(i in game.food.b){
-            game.canvas.shadowColor = "#FFFF00";
-            game.canvas.shadowBlur = Math.sin(2*game.shadow.val) * 35;
-            game.canvas.fillStyle = "#00FF05";
-            game.canvas.beginPath();
-            game.canvas.arc(game.food.b[i][0]+game.block/2,game.food.b[i][1]+game.block/2, game.block/2, 0, 2 * Math.PI, false);
-            game.canvas.fill();
-            game.canvas.fillStyle = "#F7FF45";
-            game.canvas.beginPath();
-            game.canvas.arc(game.food.b[i][0]+game.block/2,game.food.b[i][1]+game.block/2, game.block/4, 0, 2 * Math.PI, false);
-            game.canvas.fill();
-        }
-
-        game.canvas.shadowColor = '#999';
-        game.canvas.shadowBlur = 0;
-        game.canvas.fill();
-    };
-
-    window.addEventListener("resize",function(){
-        document.getElementById("battlesnake").setAttribute("width",document.getElementById("battlesnake").offsetWidth);
-        document.getElementById("battlesnake").setAttribute("height",document.getElementById("battlesnake").offsetHeight);
-        game.width = Math.round(document.getElementById("battlesnake").getAttribute("width")/10)*10;
-        game.height = Math.round(document.getElementById("battlesnake").getAttribute("height")/10)*10;
-    },false);
-
-    window.onscroll = function () { window.scrollTo(0, 0); return false;};
 }());

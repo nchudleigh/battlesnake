@@ -7,20 +7,16 @@
         var tempKeys = game.local.keys;
 
         if(tempKeys.up){
-            if(game.local.player.dir==UP)tempKeys.up=false;
-            game.local.player.dir=UP;
+            if(game.local.player.dir!=DOWN)game.local.player.dir=UP;
         }
         else if(tempKeys.down){
-            if(game.local.player.dir==DOWN)tempKeys.down=false;
-            game.local.player.dir=DOWN;
+            if(game.local.player.dir!=UP)game.local.player.dir=DOWN;
         }
         else if(tempKeys.left){
-            if(game.local.player.dir==LEFT)tempKeys.left=false;
-            game.local.player.dir=LEFT;
+            if(game.local.player.dir!=RIGHT)game.local.player.dir=LEFT;
         }
         else if(tempKeys.right){
-            if(game.local.player.dir==RIGHT)tempKeys.right=false;
-            game.local.player.dir=RIGHT;
+            if(game.local.player.dir!=LEFT)game.local.player.dir=RIGHT;
         }
 
         // Set last keys

@@ -29,32 +29,26 @@
 
         // Draw snakes
         game.snakes.drawAll();
-
-
+        // Move snakes
         game.snakes.moveAll();
 
         // Need to be moved serverside
             // Draw food
-            // game.generateFood();
+        game.generateFood();
+        game.drawFood();
 
         // Bullets
-        // game.bullets.generate();
+        game.bullets.generate();
 
         // Draw any explosions
-        // game.drawExplosions();
+        game.drawExplosions();
 
         // // Check for collisions
-        // var collisions = 0;
-        //
-        // for(var i in game.player.train){
-        //     if(game.player.train[i][0] == game.player.x && game.player.train[i][1] == game.player.y){
-        //         collisions++;
-        //         break;
-        //     }
-        // }
-        // if(game.local.player.train.length >= game.local.player.len) game.local.player.train.pop();
-        //
-        // game.local.player.train.unshift([game.local.player.x,game.local.player.y]);
+        // game.checkCollisions()
+
+        if(game.local.player.train.length >= game.local.player.len) game.local.player.train.pop();
+
+        game.local.player.train.unshift([game.local.player.x,game.local.player.y]);
 
         setTimeout(game.mainLoop,1000/game.frameRate);
     };

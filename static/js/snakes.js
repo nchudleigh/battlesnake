@@ -106,8 +106,10 @@
         }
     };
 
-    game.snakes.addPoints = function(sn,points){
-        sn.len += points;
-        document.getElementsByClassName(sn+"length")[0].innerHTML = game.state.snakes[sn].len;
+    game.snakes.addPoints = function(points){
+        game.local.player.len += points;
+        if(game.local.player.len >= game.maxLen)game.local.player.len = game.maxLen;
+        console.log(game.local.player.len, game.local.player.train)
+        document.getElementsByClassName("length")[0].innerHTML = game.local.player.len;
     };
 }());

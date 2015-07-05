@@ -14,7 +14,7 @@ var http = require('http');
 var server = http.createServer(app);
 server.listen(8000, "0.0.0.0");
 
-var io = require('socket.io')(server);
+global.io = require('socket.io')(server);
 
 
 app.get('/', function (request, response) {
@@ -39,8 +39,8 @@ function main(){
     util.functions.generateFood();
     snakes.functions.moveAll();
     snakes.functions.checkFood();
+    snakes.functions.checkAllCollisions();
     // game.bullets.generate();
-    snakes.functions.checkAllCollisions()
 
     io.emit('gameState', game.state)
     setTimeout(main,1000/game.config.frameRate);

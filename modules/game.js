@@ -12,9 +12,9 @@ exports.state = {
 exports.config = {
     block:10,
     frameRate: 25,
-    maxLen : 25,
-    width : 550,
-    height : 550,
+    maxLength : 25,
+    width : 750,
+    height : 750,
     UP : 1,
     DOWN : 2,
     LEFT : 3,

@@ -31,7 +31,6 @@
     };
 
     game.snakes.drawEyes = function(sn){
-        // This needs abstraction really badly
         game.canvas.fillStyle = "white";
         if(sn.dir === UP){
             game.canvas.fillRect(sn.x+game.block/10,sn.y+game.block/10,game.block/5,game.block/3);

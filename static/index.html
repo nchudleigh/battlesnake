@@ -6,16 +6,16 @@
         <link rel="stylesheet" href="css/main.css">
         <title>BattleSnake v0.1</title>
     </head>
-    <body onload="game.start()">
-        <div class="scores">
-            <div class="p1score score">
-                K/D:
-            </div>
-            <div class="length" style="text-shadow: 1px 1px 2px #FF50B0;">
-                LENGTH:
-            </div>
+    <body onload="game.start()"style="background-color:#111">
+        <div id="gameboard">
+            <canvas id="battlesnake" class="battlesnake"></canvas>
         </div>
-        <canvas id="battlesnake" class="battlesnake"></canvas>
+        <div id="HUDkills" class="score">
+            KILLS:0
+        </div>
+        <div id="HUDlength" class="score">
+            LENGTH:3
+        </div>
 
         <!-- Scripts -->
         <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>

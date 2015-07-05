@@ -29,6 +29,8 @@
     };
 
     game.sizeBoard = function(w, h){
+        document.getElementById("gameboard").setAttribute("width",w);
+        document.getElementById("gameboard").setAttribute("height",h);
         document.getElementById("battlesnake").setAttribute("width",w);
         document.getElementById("battlesnake").setAttribute("height",h);
         game.width = game.quantize(document.getElementById("battlesnake").getAttribute("width"));
@@ -65,5 +67,5 @@
 
     };
 
-    
+
 }());

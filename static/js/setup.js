@@ -15,7 +15,6 @@ var RIGHT = 4;
 var game = {
     block : 10,
     frameRate : 26,
-    maxLen : 25,
     local:{
         player:{},
         controls:{
@@ -37,6 +36,10 @@ var game = {
         explosions : []
     },
     config : {
+        board:{
+            width:750,
+            height:750
+        },
         food:{
             colors : [
                 "rgba(255,252,99,1)",

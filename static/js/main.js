@@ -10,7 +10,7 @@
     game.start = function(){
 
         game.canvas = document.getElementById("battlesnake").getContext("2d");
-        game.sizeBoard();
+        game.sizeBoard(game.config.board.width, game.config.board.height);
 
         game.socket = io.connect('');
         game.socket.on('connect', function(){
@@ -24,25 +24,26 @@
             console.log(userId);
             game.socket.userId = userId;
         })
+        game.socket.on('updateLength', function(snake){
+            if(game.socket.userId != snake.id)return;
+            document.getElementById('HUDlength').innerHTML ='LENGTH:'+snake.len;
+        });
+        game.socket.on('updateKills', function(snake){
+            if(game.socket.userId != snake.id)return;
+            document.getElementById('HUDkills').innerHTML ='KILLS:'+snake.kills;
+        });
+
 
         setTimeout(game.mainLoop,1100);
     };
 
     game.mainLoop = function(){
-        // Set at
-        game.sizeBoard(550, 550);
-
         // Reset canvas
-        game.canvas.clearRect(0,0,game.width+game.block,game.height+game.block);
+        game.canvas.clearRect(0,0,game.config.board.width+game.block,game.config.board.height+game.block);
 
         game.snakes.drawAll();
         game.drawFood();
         game.drawExplosions();
-
-        //
-        // if(game.local.player.train.length >= game.local.player.len) game.local.player.train.pop();
-        //
-        // game.local.player.train.unshift([game.local.player.x,game.local.player.y]);
 
         setTimeout(game.mainLoop,1000/game.frameRate);
     };

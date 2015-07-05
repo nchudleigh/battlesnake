@@ -38,10 +38,10 @@ snakes.functions.spawn = function(){
 
 
 snakes.functions.addPoints = function(snake, points){
+    if(snake.len>game.config.maxLength)return;
     snake.len += points;
+    io.emit('updateLength', snake)
 }
-
-
 
 snakes.functions.checkFood = function(){
     for(var i=0; i<game.state.snakes.length;i++){
@@ -95,7 +95,9 @@ snakes.functions.checkCollions = function(py, pr){
         if(predator.train[i][0] == prey.x && predator.train[i][1] == prey.y){
             // Player Dies
             game.state.snakes.splice(py, 1);
-            console.log('COLLISSION');
+            predator.kills+=1;
+            io.emit('updateKills', predator)
+            console.log('BOOMSHAKALAKA');
         }
     };
 };

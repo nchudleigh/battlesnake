@@ -22,7 +22,6 @@
             sizes.push(4+Math.round(Math.random()*30));
             speed.push(2+Math.round(Math.random()*6));
         }
-        console.log(angles);
         game.local.explosions.push({color: color, max : max, x : x, y : y,font : font, current : 0, angles : angles, sizes : sizes, speed : speed, points : points, message : message});
     };
 

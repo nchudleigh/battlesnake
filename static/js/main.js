@@ -8,10 +8,22 @@
     'use strict';
 
     game.start = function(){
-        game.snakes.spawn();
 
         game.canvas = document.getElementById("battlesnake").getContext("2d");
         game.sizeBoard();
+
+        game.socket = io.connect('http://localhost:8000');
+        game.socket.on('connect', function(){
+            console.log('connected');
+        })
+        game.socket.on('gameState', function(state){
+            game.state = state;
+            // console.log(game.state);
+        })
+        game.socket.on('userIdSet', function(userId){
+            console.log(userId);
+            game.socket.userId = userId;
+        })
 
         setTimeout(game.mainLoop,1100);
     };
@@ -23,32 +35,14 @@
         // Reset canvas
         game.canvas.clearRect(0,0,game.width+game.block,game.height+game.block);
 
-        game.controls();
-
-        game.copyPlayer();
-
-        // Draw snakes
         game.snakes.drawAll();
-        // Move snakes
-        game.snakes.moveAll();
-
-        // Need to be moved serverside
-            // Draw food
-        game.generateFood();
         game.drawFood();
-
-        // Bullets
-        game.bullets.generate();
-
-        // Draw any explosions
         game.drawExplosions();
 
-        // // Check for collisions
-        // game.checkCollisions()
-
-        if(game.local.player.train.length >= game.local.player.len) game.local.player.train.pop();
-
-        game.local.player.train.unshift([game.local.player.x,game.local.player.y]);
+        //
+        // if(game.local.player.train.length >= game.local.player.len) game.local.player.train.pop();
+        //
+        // game.local.player.train.unshift([game.local.player.x,game.local.player.y]);
 
         setTimeout(game.mainLoop,1000/game.frameRate);
     };

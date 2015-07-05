@@ -34,12 +34,10 @@ var game = {
         },
         lastkeys : undefined,
         canvas : null,
-        explosions : [],
-        food : {
-            max : 10,
-            superMax : 1,
-            a : [],
-            b : [],
+        explosions : []
+    },
+    config : {
+        food:{
             colors : [
                 "rgba(255,252,99,1)",
                 "rgba(255,216,99,1)",
@@ -52,12 +50,6 @@ var game = {
             dir : true,
             val : 0,
         },
-
     },
-    state:{
-        snakes : [],
-        bullets : {
-            a : [],
-        },
-    }
+    state:{}
 };

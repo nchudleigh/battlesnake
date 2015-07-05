@@ -1,7 +1,6 @@
 (function(){
     'use strict';
-
-
+    // This needs to be moved to server side
     game.controls = function(){
         // Put this frame's keys into temporary object to prevent changes in the frame
         var tempKeys = game.local.keys;
@@ -39,6 +38,7 @@
         }
         if(game.local.controls[dir].indexOf(num) != -1){
             game.local.keys[dir]=true;
+            game.socket.emit('keyPress',dir);
             return true;
         }
         else{

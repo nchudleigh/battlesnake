@@ -12,7 +12,7 @@
         game.canvas = document.getElementById("battlesnake").getContext("2d");
         game.sizeBoard();
 
-        game.socket = io.connect('http://localhost:8000');
+        game.socket = io.connect('');
         game.socket.on('connect', function(){
             console.log('connected');
         })

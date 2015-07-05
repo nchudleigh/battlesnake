@@ -15,8 +15,12 @@
     };
 
     game.snakes.draw = function(sn){
-        for(var i in sn.train){
-            game.canvas.fillStyle = sn.color;
+        for(var i=0; i<sn.train.length; i++){
+            var color = sn.color.substring(0, sn.color.length-2);
+            var opac = i/sn.train.length
+            opac = opac>0.6?0.6:opac;
+            color = color+(1-opac)+')';
+            game.canvas.fillStyle = color;
             game.canvas.fillRect(sn.train[i][0],sn.train[i][1],game.block,game.block);
         }
 

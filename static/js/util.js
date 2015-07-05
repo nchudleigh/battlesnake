@@ -65,19 +65,5 @@
 
     };
 
-    game.checkCollision = function(){
-        var collisions = 0;
-        //
-        for(var i=0; i<game.state.snakes.length; i++){
-            for(var i=0; i<game.state.snakes[i].train.length; i++){
-                var sn = game.state.snakes[i];
-                var pr = game.local.player;
-                if(sn.train[i][0] == pr.x && sn.train[i][1] == pr.y){
-                    // Player Dies
-                    game.local.player = {};
-                }
-            };
-
-        }
-    }
+    
 }());

@@ -7,11 +7,12 @@ app.use(express.static(__dirname + '/static'))
 var snakes = require('./modules/snakes')
 var util = require('./modules/util')
 var game = require('./modules/game')
+var keyboard = require('./modules/keyboard')
 
 
 var http = require('http');
 var server = http.createServer(app);
-server.listen(8000);
+server.listen(8000, "0.0.0.0");
 
 var io = require('socket.io')(server);
 
@@ -22,11 +23,11 @@ app.get('/', function (request, response) {
 
 
 io.on('connection', function (socket) {
-    var userId = snakes.functions.spawn();
+    var snake = snakes.functions.spawn();
     socket.emit('gameState', game.state);
-    socket.emit('userIdSet', userId);
+    socket.emit('userIdSet', snake.id);
     socket.on('keyPress', function(data){
-        console.log('keyPress', data);
+        keyboard.functions.readKeyPress(data, snake);
     });
     socket.on('disconnect', function(e){
         console.log(e);
@@ -37,8 +38,9 @@ io.on('connection', function (socket) {
 function main(){
     util.functions.generateFood();
     snakes.functions.moveAll();
+    snakes.functions.checkFood();
     // game.bullets.generate();
-    // game.checkCollisions()
+    snakes.functions.checkAllCollisions()
 
     io.emit('gameState', game.state)
     setTimeout(main,1000/game.config.frameRate);

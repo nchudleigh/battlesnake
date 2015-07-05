@@ -25,3 +25,8 @@ exports.config = {
         superMax: 1
     }
 }
+
+global.UP = 1;
+global.DOWN = 2;
+global.LEFT = 3;
+global.RIGHT = 4;

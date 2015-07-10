@@ -30,15 +30,34 @@ snakes.functions.generate = function(){
     return player;
 };
 
-snakes.functions.spawn = function(){
+snakes.functions.alive = function(id){
+    for(var i=0; i<game.state.snakes.length;i++){
+        if(id == game.state.snakes[i].id){
+            return true;
+        }
+    }
+    return false;
+}
+
+snakes.functions.spawn = function(id){
     var tmp = snakes.functions.generate();
+    if(id){
+        tmp.id = id;
+    }
     var len = game.state.snakes.push(tmp);
     return game.state.snakes[len-1];
 };
 
+snakes.functions.kill = function(id){
+    for(var i=0; i<game.state.snakes.length; i++){
+        if(id == game.state.snakes[i].id){
+            game.state.snakes.splice(i,1);
+        }
+    }
+};
+
 
 snakes.functions.addPoints = function(snake, points){
-    if(snake.len>game.config.maxLength)return;
     snake.len += points;
     io.emit('updateLength', snake)
 }
@@ -52,6 +71,25 @@ snakes.functions.checkFood = function(){
                 break;
             }
         }
+    }
+}
+
+snakes.functions.checkLengths = function(){
+    for(var sn=0; sn<game.state.snakes.length; sn++){
+        snakes.functions.checkLength(game.state.snakes[sn]);
+    }
+}
+
+snakes.functions.calories = function(){
+    for(var sn=0; sn<game.state.snakes.length; sn++){
+        game.state.snakes[sn].len -= 1;
+        io.emit('updateLength', game.state.snakes[sn])
+    };
+}
+
+snakes.functions.checkLength = function(sn){
+    if(sn.len<=0){
+        snakes.functions.kill(sn.id);
     }
 }
 

@@ -22,6 +22,7 @@ var game = {
             down:[83,40],
             left:[65,37],
             right:[68,39],
+            spawn:[80],
             fire:[70,32]
         },
         keys : {

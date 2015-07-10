@@ -1,6 +1,7 @@
 var keyboard = {
     functions : {}
 };
+var snakes = require('./snakes')
 
 keyboard.functions.readKeyPress = function(dir, player){
     switch (dir) {
@@ -15,6 +16,12 @@ keyboard.functions.readKeyPress = function(dir, player){
             break;
         case 'right':
             if(player.dir!=LEFT)player.dir=RIGHT;
+            break;
+        case 'spawn':
+            if(!snakes.functions.alive(player.id)){
+                snakes.functions.spawn(player.id);
+                io.emit('updateLength', player)
+            }
             break;
     }
 };

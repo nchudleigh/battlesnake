@@ -52,6 +52,7 @@
         checkKey('down', e.which);
         checkKey('left', e.which);
         checkKey('right', e.which);
+        checkKey('spawn', e.which);
         checkKey('fire', e.which);
     };
 

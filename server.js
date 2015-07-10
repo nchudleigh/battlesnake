@@ -30,16 +30,22 @@ io.on('connection', function (socket) {
         keyboard.functions.readKeyPress(data, snake);
     });
     socket.on('disconnect', function(e){
-        console.log(e);
-    })
+        snakes.functions.kill(snake.id)
+    });
 });
 
-
+var time=0;
 function main(){
+    time++;
     util.functions.generateFood();
     snakes.functions.moveAll();
     snakes.functions.checkFood();
     snakes.functions.checkAllCollisions();
+    snakes.functions.checkLengths();
+    if(time%100==0){
+        snakes.functions.calories();
+        time=1;
+    }
     // game.bullets.generate();
 
     io.emit('gameState', game.state)
